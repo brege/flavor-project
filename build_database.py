@@ -23,9 +23,9 @@ of flavor combinations:
    e.g. Basil and Tarragon
 
 So, while 
- basil + garlic + olive oil + Parmesan cheese + pine nuts
+    basil + garlic + olive oil + Parmesan cheese + pine nuts
 is a natural flavor affinity (i.e. pesto), 
- basil + garlic + olive oil + lemon + black pepper + walnut
+    basil + garlic + olive oil + lemon + black pepper + walnut
 also has strong flavor affinity and in my experience makes a 
 wonderfully fine pesto, too, esp. in grilled chicken wraps.  
 
@@ -36,15 +36,15 @@ Mexican, and Italian all have paths between each other but we
 don't see their fusions as frequently as we do with Brazilian and 
 Japanese or French and Creole which have clear culturally historic 
 blending.  Can we predict ingredient pathways between African and 
-Chinese cuisines based on nontrivial ingredients the same way 
-Indian curries interface with British cuisine?   
+Chinese cuisines based on nontrivial ingredients the same way, say, 
+Indian curries might interface with British cuisine today?   
 
 The overall purpose of this project is to first create a machine 
 readable database (from the various book's epub files) of flavor 
-affinities and then create an input system so that a chef can either 
-visualize graphs of possible flavor combinations given several input
-ingredients or so, so that she may learn and interactively chart 
-a course in recipe creation.
+compatablities and then create an input system so that a chef 
+can either visualize graphs of possible (new) flavor combinations 
+given several input ingredients or so, so that she may learn 
+and interactively chart a course in recipe creation.
 
 """
 
@@ -54,7 +54,7 @@ import glob
 import os.path
 import json
 import src.parse_brackets as pb
-import src.flavor_tools as ft
+from src.food_genres import isCulinaryGroup
 
 ##
 # Matching Flavors Heuristic (cf. pp 37)
@@ -66,7 +66,7 @@ import src.flavor_tools as ft
 # 2. olive oil/parm <-> venus
 # 3. lemon          <-> earth
 # 4. pine nuts      <-> mars
-# 5. [unmentioned]  <-> asteroid belt
+# 5. [unmentioned]  <-> asteroid belt?
 # 6. tarragon/avoid <-> gas planets
 ##
 
@@ -83,6 +83,19 @@ def what_rank(x):
     else:
         rank = 4
     return rank
+
+def rank_subtags(Y, ptag):
+    rank = lambda x: 4 - x
+    y = [rank(0) for y_i in Y]
+    s_tags=ptag.find_all('strong')
+    for s_tag in s_tags:
+        for j in range(len(Y)):
+            Y[j] = Y[j].strip()
+            if Y[j] in s_tag.text:
+                y[j] = rank(1)
+                if Y[j].isupper(): y[j] -= 1
+                if "*" in Y[j]: y[j] -= 1
+    return Y, y
 
 def isCap(x) : return x.isupper()
 
@@ -109,9 +122,19 @@ def remove_parens(a):
 
 # TODO: move to config file, there we can handle special cases
 #       that we just have to hardcode
-topics = ["Season:", "Taste:", "Function:",
-          "Weight:", "Volume:", "Techniques:",
-          "Tips:", "Use ", "Botanical relatives:", "Weather:"]
+topics = ["Season:", 
+          "Taste:", 
+          "Function:",
+          "Weight:", 
+          "Volume:", 
+          "Techniques:",
+          "Tips:",
+          "Tip:", 
+          "Use ", 
+          "Botanical relative:", 
+          "Botanical relatives:", 
+          "Weather:",
+          "Character:"]
           # "Use " has several instances after these cues (cf. Page 37) 
           # in the book that /should/ be caught with "Tips:", although
           # "Tips:" has its own class=ul3, but some other content 
@@ -127,24 +150,24 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
     with open(input_file) as markup:
 
         soup = BeautifulSoup(markup, features="html.parser")
-
         ##
         # In the source files of the book, FlavorBible_chap-3*.html, the source 
         # ingredient is given by .lh1, but sometimes .lh, while the friendly, 
         # enemy, and super-alliance ingredients are captured by .ul and .ul1 
         # within the .lh* bounds (so is some metadata that will be useful later)
         ##
-
         classes = ["lh","lh1","ul","ul1","ul3"]
-
         ptags = soup.find_all("p", class_=classes)   
 
         # build the dictionary from each input html chapter file
         for ptag in ptags:
 
+            ##
+            # SOURCES
+            ##  determine the titular ingredients
+
             T = list(ptag.children)
- 
-            # determine the titular ingredients
+
             if ptag['class'] == ['lh'] or ptag['class'] == ['lh1']:
                 flag = 0
                 dummy_array=[]
@@ -198,7 +221,11 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
                 bible[title] = {title.lower():flag}
                 bible[title][ptag.find_next('strong').text] = 1
                 continue
-            # capture affinities as raw list for each titular ingredient
+
+            ##
+            # METADATA
+            ##  capture affinities as raw list for each titular ingredient dictionary
+
             if contains_affinity(ptag.text):
                 # will be useful for training the flavor model
                 dummy_array.append(ptag.text) 
@@ -235,11 +262,16 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
                 # print("contains peak", entry, what_rank(ptag))
                 bible[title][entry]=what_rank(ptag)
                 continue
-            # TODO: keep this data, then parse out in pandas code, but store as a range
+            # TODO: Keep this data, then parse out in pandas code, but store as a range
             # here because it might be nice to query "October" for the graph, or maybe 
             # it's better to just use a third party seasonal ingredient database that has
-            # ag-zone boundaries, since that's how you'd use it
+            # ag-zone boundaries, since that's how you'd use it. You only see this 
+            # heuristic in the book under each of the four seasons.
 
+            ##
+            # TARGETS
+            ##            
+   
             # when: a: x, y, z, [..,]
             # e.g.:
             #
@@ -253,46 +285,78 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
             #       <strong>ROQUEFORT, Stilton</strong>
             #   </p>
             #
-            # (i'm embarrased by how many attempts this took me)
+
+            # [errata]
+            if "When look" in ptag.text: continue
+            # [/errata]    
 
             if re.search(':', ptag.text):
+                # this case is much different, because what proceeds the
+                # colon ':' is a category (genre) that might either be
+                # read after or before or need not be mentioned with the 
+                # following matter after the colon (species).  Therefore,
+                # in order for the database to reflect natural language, 
+                # we must accurately provide the context for that species
+                # as close to English as we can.. 
 
-                #if title != 'PEARS': continue #!Debug
-
+                #if title == 'PEARS': #continue #!Debug
+                #    print(ptag)
                 rank = lambda x: 4 - x 
-
                 subtitle = ptag.text.split(':')[0]
-                Y = ptag.text.split(':')[1]
-
-                subdict = {}
-                subdict.update( {subtitle.lower():what_rank(ptag)} )
-                s_tags=ptag.find_all('strong')
+                subtext = ptag.text.split(':')[1]
+                s_tags = ptag.find_all('strong')
         
-                if "(e.g." in subtitle:
-                    Y = pb.parse_brackets(X, '\(e.g.', '\)', sep=',')
+                # when: a: x (e.g., y), z
+                if "(e.g." in subtext:
+                    Y = pb.parse_brackets(subtext, '\(e.g.', '\)', sep=',')
                 else:
-                    # when: a: x (e.g., y), z
-                    X = remove_parens(ptag.text).split(':')[1].strip()
-                    Y = X.split(',')
-                y = [rank(0) for y_i in Y]
-                
-                for s_tag in s_tags: 
-                    for j in range(len(Y)):
-                        Y[j] = Y[j].strip()
-                        if re.search(Y[j], s_tag.text):
-                            y[j] = rank(1)
-                            if Y[j].isupper(): y[j] -= 1
+                    Y = ptag.text.split(':')[1].strip()
+                    Y = Y.split(',')
 
+                Y = isCulinaryGroup.orient(ptag.text, subtitle, Y)
+                Y, y = rank_subtags(Y, ptag)
                 for i in range(len(Y)):
-                    subdict.update( {Y[i].lower().strip():y[i]} )
-                
+                    subtitle = Y[i].lower().strip('*').strip()
+                    bible[title][subtitle] = y[i]
 
+            # when: a (e.g., x, y, [,..])
+            elif "(e.g." in ptag.text:
+                X = ptag.text
+                # [errata: pp. 334]
+                if ")" not in X:
+                    X+=")"
+                # [/errata]
+                Y = pb.parse_brackets(X, '\(e.g.', '\)', sep=',')
+                # [errata pp 151]
+                if 'sweet (' in ptag.text:
+                    Y = [re.sub('sweet \(','', y) for y in Y]
+                    Y = [re.sub('\)','', y) for y in Y]
+                # [/errata]
+                Y, y = rank_subtags(Y, ptag)
+                for i in range(len(Y)):
+                    subtitle = Y[i].lower().strip('*').strip()
+                    bible[title][subtitle] = y[i]
+
+            # when: a, b [hopefully]
             else:
-                ##
+                if re.search(',', ptag.text):
+                    rank = lambda x: 4 - x
+                    X = re.sub('esp. ','',ptag.text)
+                    X = re.sub('e.g.,','',X)
+                    X = re.sub(' or ','', X) 
+                    Y = X.split(',')
+                    s_tags = ptag.find_all('strong')
+            
+                    Y = isCulinaryGroup.orient(X, Y[0], Y[1:])
+                    print(X, Y)
+                    Y, y = rank_subtags(Y, ptag)
+                    for i in range(len(Y)):
+                        subtitle = Y[i].lower().strip('*').strip()
+                        bible[title][subtitle] = y[i]
+
                 # finally, store the ingredients
-                ##
-                entry, rank = ptag.text.lower(), what_rank(ptag)
-                bible[title][ptag.text.lower()] = what_rank(ptag)
+                subtitle, rank = ptag.text.lower(), what_rank(ptag)
+                bible[title][subtitle] = what_rank(ptag)
 
 
 output_file = open("bible.json", "w")
@@ -302,4 +366,3 @@ json.dump(bible, output_file, indent = 2)
 # TODO: account for ", esp. [..] or [..]" cases
 # TODO: account for ", e.g., [..]" cases
 # TODO: account for cuisine [define class?]
-# TODO: account for "pepper: black, white" etc [use food_generes.py]
