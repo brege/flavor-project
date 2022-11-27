@@ -1,6 +1,6 @@
 import pandas as pd
 import os.path
-import src.flavor_tools as ft
+import src.data_tools as dt
 
 def find_triplets(v):
     # provides a list of all triplets for all elements in a slice
@@ -31,7 +31,7 @@ def affinities_of_slice(D, v):
 
         # set of all elements w in the total intersection 
         # of triplet U_i 
-        w_i = ft.intersection_of_n_sets(D, u_i, len(u_i))
+        w_i = dt.intersection_of_n_sets(D, u_i, len(u_i))
 
         # determine which elements in the set w are canonical in D,
         # thus determining the canonical set W for each triplet
