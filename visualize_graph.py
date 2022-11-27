@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 df = pd.read_pickle('./.convert_rank_to_weight_df.pkl')
 bf = pd.read_pickle('./.jac_sim_df.pkl')
 
-#v = ['BASIL']
+#v = ['BANANAS']
 v = ['BASIL', 'CHEESE, PARMESAN', 'GARLIC', 'OLIVE OIL', 'PINE NUTS']
 a = v[0]
 
 if len(v) < 2:
     v = []
-    n = 6
+    n = 11
     print("Generating seed list from top five matching ingredients") 
     Bf = bf[a].nlargest(n)
     for idx in Bf.index:
@@ -85,7 +85,7 @@ nx.draw(GH, pos,
         node_color=node_colors,
         edgelist=edge_colors.keys(), 
         edge_color=edge_colors.values(),
-        node_size=120,
+        node_size=200,
         width=ws,
         alpha=0.5,
         with_labels=True)
