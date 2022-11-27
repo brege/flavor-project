@@ -2,6 +2,8 @@
 
 """
 
+Usage: python3 ./build_database.py 1> ./database.csV
+
 The purpose of this code is to create a database with an assumed seven 
 rankings in "The Flavor Bible" and related literature for the strengths
 of flavor combinations:
@@ -56,7 +58,7 @@ def what_rank(x):
     return rank
 
 
-markup = open("./basil-2.html")
+markup = open("./input/basil-2.html")
 soup = BeautifulSoup(markup, features="lxml")
 
 entry_tag = soup.select(".lh1")
@@ -76,6 +78,5 @@ for tag in first_hit[0].find_next_siblings(re.compile("p"), class_="ul"):
         print(tag.text, "6")
         continue
     print(tag.text, what_rank(tag))
-
 
 
