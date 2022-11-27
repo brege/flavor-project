@@ -3,38 +3,33 @@ import re
 def parse_brackets(X, bra, ket, sep):
 
     '''
-    Assumes X is a string containing "abc, bra asdfghjklket"
     Input: 
-        X = 'Leiflft, \[LB.A 1.0, B 1.0RB\], C, D \[LB E,FRB\]'
-    Config::
+        X = 'hello, \[LB.A 1.0, B 1.0RB\], C, D \[LB. E,FRB\]'
+    Config:
         sep = ',' 
         bra = '\[LB.'
         ket = 'RB\]'
-    Output::
-        Y =['Left', 'A 1.0', 'B 1.0', 'C', 'D', 'E']
+    Output:
+        Y = ['hello', 'A 1.0', 'B 1.0', 'C', 'D', 'E']
     NB: This does not iterate, and regex wizards know better than I how to
         do this succinctly, this approach is familiar to me since you do
         it a lot in finite element methods.
-    '''
 
-    # Strategy:
-    #
-    #   X:  ---------[*,*,*,*]-----[*,*]----,---[*]-----
-    #   0:  [---L---][---P---][-----------R------------]
-    #   1:  .........[q,q,q,q][-L-][-P-][------R-------]
-    #   2:  .......................[q,q][---L--][P][-R-]          
-    #   3:  ....................................[q][-L-]
-    #   Y:  ............................................
-    #
-    # N.B. this won't work on nested paren's
+    Strategy:
+   
+      X:  ---------[*,*,*,*]-----[*,*]----,---[*]-----
+      0:  [---L---][---P---][-----------R------------]
+      1:  .........[q,q,q,q][-L-][-P-][------R-------]
+      2:  .......................[q,q][---L--][P][-R-]          
+      3:  ....................................[q][-L-]
+      Y:  ............................................
+   
+    N.B. this won't work on nested parens
+    '''
 
     # determine P blocks
     pattern = bra+'.*?'+ket
-    print(pattern)
     P = re.findall(pattern, X)
-    print(P)
-        
-
          
     # then index the content of the P blocks with Q:
     Q = []

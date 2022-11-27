@@ -1,8 +1,11 @@
 def set_from_df_col(x):
     X = set()
     for i in x.index:
-        if x[i] > 0:
-            X.add(i)
+        try:
+            int(x[i])
+            if x[i] > 0:
+                X.add(i)
+        except: continue
     return X
 
 def intersection_of_n_sets(D, v, n):
