@@ -60,14 +60,7 @@ from src.food_genres import isCulinaryGroup
 # Matching Flavors Heuristic (cf. pp 37)
 # TODO: Normalize with a power law?
 # Note that these ranks can be thought of as the distance from the source
-# ingredient. If basil were the sun, the pesto solar system would be:
-# 0. basil          <-> sun
-# 1. garlic         <-> mercury
-# 2. olive oil/parm <-> venus
-# 3. lemon          <-> earth
-# 4. pine nuts      <-> mars
-# 5. [unmentioned]  <-> asteroid belt?
-# 6. tarragon/avoid <-> gas planets
+# ingredient.
 ##
 
 

@@ -14,7 +14,7 @@ a = v[0]
 if len(v) < 2:
     v = []
     n = 11
-    print("Generating seed list from top five matching ingredients") 
+    print("Generating seed list from top matching ingredients") 
     Bf = bf[a].nlargest(n)
     for idx in Bf.index:
         v.append(idx)
