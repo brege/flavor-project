@@ -1,6 +1,24 @@
 import pandas as pd
 import os.path
-import src.data_tools as dt
+
+def set_from_df_col(x):
+    X = set()
+    for i in x.index:
+        try:
+            int(x[i])
+            if x[i] > 0:
+                X.add(i)
+        except: continue
+    return X
+
+def intersection_of_n_sets(D, v, n):
+    L = set_from_df_col(D[v[n-1]])
+    if n == 0:
+        return L
+    else:
+        n -= 1
+        R = intersection_of_n_sets(D, v, n)
+        return L.intersection(R)
 
 def find_triplets(v):
     # provides a list of all triplets for all elements in a slice
@@ -31,7 +49,7 @@ def affinities_of_slice(D, v):
 
         # set of all elements w in the total intersection 
         # of triplet U_i 
-        w_i = dt.intersection_of_n_sets(D, u_i, len(u_i))
+        w_i = intersection_of_n_sets(D, u_i, len(u_i))
 
         # determine which elements in the set w are canonical in D,
         # thus determining the canonical set W for each triplet

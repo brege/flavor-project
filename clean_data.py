@@ -184,7 +184,6 @@ def is_bible_modified(old_bible, new_bible):
     else:
         print("Bible has not been modified")
 
-
 # clean the bible
 def clean_bible(bible):
     """Clean bible"""
@@ -202,10 +201,10 @@ def clean_bible(bible):
 # write the bible
 def write_bible(bible, output):
     """Write bible"""
-    # if the output file is the same as the input file
-    if os.path.exists(output):
-        # rename the output file
-        os.rename(output, output + '.bak')    
+    # if arg1 and arg2 are the same, then make a copy
+    # of arg1 and write to that
+    if input == output:
+        output = input + '.copy'
     # write the new file
     with open(output, 'w') as file:
         json.dump(bible, file, indent=2, sort_keys=True)

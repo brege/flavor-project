@@ -1,6 +1,4 @@
 import re
-# see "unique_affixes.txt" for a full list of A's that 
-# appear from splitting A:B text in the <p> tags
 
 class isCulinaryGroup:
     
@@ -215,23 +213,22 @@ class isCulinaryGroup:
             'Zuidam Dry: orange peel': #ibid
                 ['orange peel'],
             }
-
+        # at this point you wonder if its even worth it to have a dict
 
         genre_ = genre.lower().strip("*")
         digest = []
-
         if name in case_by_case:
             digest = case_by_case[name]
         elif genre_ in suffix:
-            [ digest.append(k+' '+genre_) for k in species ]#.split(',') ]
+            [ digest.append(k+' '+genre_) for k in species] #.split(',') ]
         elif genre_ in prefix_remove: 
             [ digest.append(genre_) ]
-            [ digest.append(k) for k in species ]#.split(',') ]
+            [ digest.append(k) for k in species] #.split(',') ]
         elif genre_ in prefix_after: 
-            [ digest.append(k+' '+genre_) for k in species]#.split(',') ]
+            [ digest.append(k+' '+genre_) for k in species] #.split(',') ]
         elif genre_ in prefix_before:
             [ digest.append(genre_) ]
-            [ digest.append(genre_+' '+k) for k in species]#.split(',') ]
+            [ digest.append(genre_+' '+k) for k in species] #.split(',') ]
         else:
             print("Warn:", name, "could not be parsed")
             digest.append(name)

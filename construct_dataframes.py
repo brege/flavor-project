@@ -3,8 +3,8 @@ import pandas as pd
 import json
 import numpy as np
 import os.path
-import src.data_tools as dt
 import scratch.jaccard_probability_measure as jpd
+from heatmap import set_from_df_col
 
 def simple_jaccard_similarity(A, B):
     nom = A.intersection(B)
@@ -89,7 +89,7 @@ def drop_sparse_cols(D,n):
     i = 0
     print("Removing any columns that might be too sparse")
     for idx in D.T.index:
-        col_red = dt.set_from_df_col(D[idx])
+        col_red = set_from_df_col(D[idx])
         if len(list(col_red)) < n:
             if i % 100 == 99:
                 print("Removed", i, "index entries so far..")
@@ -181,9 +181,9 @@ print(b, c, jaccard_score(df[b], df[c]))
 print()
 
 print("#3) Raw Element Calculation - Simple Jaccard Method:")
-A = dt.set_from_df_col( df[a] )
-B = dt.set_from_df_col( df[b] )
-C = dt.set_from_df_col( df[c] )
+A = set_from_df_col( df[a] )
+B = set_from_df_col( df[b] )
+C = set_from_df_col( df[c] )
 print(a, b, simple_jaccard_similarity(A, B))
 print(a, c, simple_jaccard_similarity(A, C))
 print(b, c, simple_jaccard_similarity(B, C))
