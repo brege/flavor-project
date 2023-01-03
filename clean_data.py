@@ -209,6 +209,35 @@ def write_bible(bible, output):
     with open(output, 'w') as file:
         json.dump(bible, file, indent=2, sort_keys=True)
 
+class convertRank:
+    """Convert rank"""
+    def __init__(self, n):
+        self.n = n
+    def to_weight(n):
+        """To weight"""
+        eps = 1e-6
+        try: m = int(n)
+        except: pass
+        if n < -eps: return 0
+        elif n > eps: return 5-n
+        else: return 0
+    def to_binary(n):
+        """To binary"""
+        eps = 1e-6
+        try: m = int(n)
+        except: pass
+        if n < eps: return 0
+        elif n > eps: return 1
+        else: return 0
+
+def apply_weight(bible):
+    """Apply weight"""
+    for key, value in bible.items():
+        for entry, rank in value.items():
+            if entry == 'topics' or entry == 'affinities':
+                continue
+            bible[key][entry] = convertRank.to_weight(rank)
+
 def main():
     """Main"""
     # get the input and output files
@@ -219,6 +248,8 @@ def main():
         bible = json.load(file)
     # clean the bible
     clean_bible(bible)
+    # apply weight
+    apply_weight(bible)
     # write the bible
     write_bible(bible, output)
 

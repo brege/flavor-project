@@ -98,7 +98,7 @@ def drop_sparse_cols(D,n):
 
     return D
 
-input_dir = "/home/notroot/Build/flavor-project/"
+input_dir = "."
 input_file = "bible.json"
 file = os.path.join(input_dir, input_file)
 df=pd.read_json(file)
