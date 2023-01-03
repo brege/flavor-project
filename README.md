@@ -24,28 +24,24 @@ source, and is based on the different typefaces used in the book.
 
 We assume these html chapter files live in ./input/.
 
-2. build the dataframes (pandas)
+2. clean up the json, which outputs a better weighted `clean.json`
 ```
-python construct_dataframes.py
+python clean_data.py bible.json clean.json
 ```
 
-3. visualize a similarity heatmap from a list of input ingredients
+3. compute the similarity matrix in the jaccard metric, which makes 
+   a larger `similarity.json` 
+
+4. visualize a similarity heatmap from a list of input ingredients[*]
 ```
 python heatmap.py
 ```
 
-4. visualize similarity graph (networkx) from a list of input ingredients
+5. visualize similarity graph (networkx) from a list of input 
+ingredients[*]
 ```
 python visualize_graph.py
 ```
 
-Pickle files of the dataframes are generated and stored in the source 
-directory `*.pkl`.  Use `'./run-all.sh` to build `bible.json` and datframes 
-which are both needed for visualization.
-
-## TODO
-
-* the similarity matrix calculation can be done better than what is being
-done currently
-* graph playground really whould be done in javascript, so the nodes have hover
-text, ability to input queries, just navigate the whole set in general 
+[*] these are going to change, and we'll add some histograms to check
+centrality
