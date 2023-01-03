@@ -95,7 +95,7 @@ def test():
 # this is the main function
 def main():
 
-    # test the functions:
+    #test the functions:
     #test()
 
     # get the input and output files
@@ -104,15 +104,9 @@ def main():
 
     # construct dataframes from the json files
     df = pd.read_json(input_file)
-    print(df.head(5), df.tail(5))
-    
-    # remove the metadata entries
     df = df[df.index.str.contains("topics")==False]
     df = df[df.index.str.contains("affinities")==False]
-
-    # fill NaNs with zeros
     df = df.fillna(0)
-    
 
     # compute the similarity matrix
     '''see notes'''

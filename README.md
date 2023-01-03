@@ -31,16 +31,24 @@ python clean_data.py bible.json clean.json
 
 3. compute the similarity matrix in the jaccard metric, which makes 
    a larger `similarity.json` 
-
-4. visualize a similarity heatmap from a list of input ingredients[*]
 ```
-python heatmap.py
+python compute_similarities.py clean.json similarity.json
+```
+
+4. create the network graph date:
+```
+create_nodes_and_edges.py clean.json edges.json nodes.json
+```
+
+4. visualize a similarity heatmap from a list of input ingredients
+```
+python viz_heatmap.py -i similarity.json -o samples.txt -d 5 -n 'basil' -n 'garlic' -n 'olive oil'
 ```
 
 5. visualize similarity graph (networkx) from a list of input 
 ingredients[*]
 ```
-python visualize_graph.py
+#python visualize_graph.py
 ```
 
 [*] these are going to change, and we'll add some histograms to check
