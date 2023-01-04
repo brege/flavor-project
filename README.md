@@ -15,7 +15,7 @@ and concepts converge, can help assist a wide range of users:
 0. [buy the ebook](https://karenandandrew.com/books/the-flavor-bible/) and read it
 
 1. parse the epub files from the book into json format
-```
+``` bash
 python ./parse_html.py
 ```
 which generates `bible.json`.  The numbers in the json represent 
@@ -25,29 +25,34 @@ source, and is based on the different typefaces used in the book.
 We assume these html chapter files live in ./input/.
 
 2. clean up the json, which outputs a better weighted `clean.json`
-```
+``` bash
 python clean_data.py bible.json clean.json
 ```
 
 3. compute the similarity matrix in the jaccard metric, which makes 
    a larger `similarity.json` 
-```
+``` bash
 python compute_similarities.py clean.json similarity.json
 ```
 
 4. create the network graph date:
-```
+``` bash
 create_nodes_and_edges.py clean.json edges.json nodes.json
 ```
 
-4. visualize a similarity heatmap from a list of input ingredients
+5. slice the graph:
+``` bash
+python slice_network.py -i nodes.json -e edges.json -n 'basil' -n 'garlic' -n 'olive oil'
 ```
+
+6. visualize a similarity heatmap from a list of input ingredients
+``` bash
 python viz_heatmap.py -i similarity.json -o samples.txt -d 5 -n 'basil' -n 'garlic' -n 'olive oil'
 ```
 
-5. visualize similarity graph (networkx) from a list of input 
+7. visualize similarity graph (networkx) from a list of input 
 ingredients[*]
-```
+``` bash
 #python visualize_graph.py
 ```
 

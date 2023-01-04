@@ -32,7 +32,6 @@ import sys
 import pandas as pd
 import numpy as np
 import os.path
-import json
 import sys
 
 from docopt import docopt
@@ -63,12 +62,6 @@ def main():
     if args['-n'] is None:
         ingredients = ['garlic', 'basil', 'olive oil']
     else: ingredients = args['-n']
-
-
-    print('input_file: ', input_file)
-    print('output_file: ', output_file)
-    print('depth: ', depth)
-    print('ingredients: ', ingredients)
 
     # read the input file
     sim_matrix = pd.read_json(input_file)
