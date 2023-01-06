@@ -53,7 +53,35 @@ def similarity_from_metric(df, metric):
 
     return sim_matrix
         
-   
+def sort_by_similarity(df):
+    # input: a dataframe
+    # output: a json file 
+
+    jacc_json = df.to_json(orient='index', indent=2)
+
+    # convert to a dictionary
+    jacc_dict = json.loads(jacc_json)
+
+    # sorted_dict will look like this:
+    # {'A': {'A': 1.0, 'B': 0.6, 'C': 0.5, 'D': 0.3, 'E': 0.1},
+    #  'B': {'B': 1.0, 'A': 0.6, 'C': 0.4, 'D': 0.2, 'E': 0.0},
+    #   ...
+    #  'E': {'E': 1.0, 'A': 0.1, 'B': 0.0, 'C': 0.0, 'D': 0.0}}
+
+    sorted_dict = {}
+    for key in jacc_dict.keys():
+        sorted_dict[key] = {k: v for k, v in sorted(jacc_dict[key].items(), key=lambda item: item[1], reverse=True)}
+
+    # print the first few entries
+    print('first few entries of sorted_dict')
+    print(list(sorted_dict.items())[:5])
+
+    return sorted_dict
+
+
+
+
+
 
 # this is the test function
 def test():
@@ -108,18 +136,15 @@ def main():
     df = df[df.index.str.contains("affinities")==False]
     df = df.fillna(0)
 
-    # compute the similarity matrix
+    # compute the similarity matrix, and save
+    # a sorted dictionary to a json file
     '''see notes'''
     sim_matrix = similarity_from_metric(df, 'jaccard')
-    
-    # make it so it's in three decimal places
     sim_matrix = sim_matrix.round(3)
+    sim_dict = sort_by_similarity(sim_matrix)
+    with open(output_file, 'w') as f:
+        json.dump(sim_dict, f, indent=2)
 
-    # save the similarity matrix, but make sure  
-    # it's formatted so humans can read it 
-    sim_matrix.to_json(output_file, orient='index', indent=2)   
-    # this writes the similarity matrix to a json file.
-    # it's only for canonical key nodes, not every node
 
 if __name__ == "__main__":
     main()
