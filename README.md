@@ -47,7 +47,7 @@ python slice_network.py -i nodes.json -e edges.json -n 'basil' -n 'garlic' -n 'o
 
 6. visualize a similarity heatmap from a list of input ingredients
 ``` bash
-python viz_heatmap.py -i similarity.json -o samples.txt -d 5 -n 'basil' -n 'garlic' -n 'olive oil'
+python heatmap.py -i similarity.json -o samples.txt -d 5 -n 'basil' -n 'garlic' -n 'olive oil'
 ```
 
 7. visualize similarity graph (networkx) from a list of input 
