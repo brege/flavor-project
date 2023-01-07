@@ -1,11 +1,18 @@
 """
 Usage:
-    compute_similarities.py input_json_file output_json_file
+    compute_similarities.py -i input_json_file -o output_json_file 
+
+Options:
+    -i input_json_file     The input json file, which is the output of
+                            clean_data.py
+    -o output_json_file    The output json file, which is the output of
+                            this script
 
 The input json file should the file that was output by
 the clean_data.py script, whereas the output json file 
 from this script will be the similarity matrix, but only 
 for the canonically title ingrdients.
+
 """
 
 import pandas as pd
@@ -14,6 +21,8 @@ import os.path
 import json
 import sys
 from sklearn.metrics.pairwise import pairwise_distances
+
+from docopt import docopt
 
 def set_from_df_col(df, col):
     # get the set of non-zero entries
@@ -46,8 +55,7 @@ def similarity_from_metric(df, metric):
     #  'cosine', 'hamming', 'jaccard'
     # you need to pass the datframe values, not the 
     # dataframe itself (p. for 'jaccard')
-    metric_dist = pairwise_distances(df.T.values, metric = metric, n_jobs=-1) 
-
+    metric_dist = pairwise_distances(df.T.values, metric = metric, n_jobs=-1)
     sim_matrix = 1 - metric_dist
     sim_matrix = pd.DataFrame(sim_matrix, index=df.columns, columns=df.columns)
 
@@ -73,15 +81,10 @@ def sort_by_similarity(df):
         sorted_dict[key] = {k: v for k, v in sorted(jacc_dict[key].items(), key=lambda item: item[1], reverse=True)}
 
     # print the first few entries
-    print('first few entries of sorted_dict')
-    print(list(sorted_dict.items())[:5])
+    #print('first few entries of sorted_dict')
+    #print(list(sorted_dict.items())[:5])
 
     return sorted_dict
-
-
-
-
-
 
 # this is the test function
 def test():
@@ -121,20 +124,43 @@ def test():
     print(simple_jaccard_similarity(set_from_df_col(df, 'A'), set_from_df_col(df, 'B')))
 
 # this is the main function
-def main():
+def main():    
+    args = docopt(__doc__)
 
-    #test the functions:
-    #test()
+    input_file = args['-i']
+    output_file = args['-o']
 
-    # get the input and output files
-    input_file = sys.argv[1]
-    output_file = sys.argv[2]
+    # test the functions
+    # test()
 
-    # construct dataframes from the json files
+    # check if the input file exists
+    if not os.path.isfile(input_file):
+        print('input file does not exist')
+        sys.exit(1)
+    # if output file not specified, use the default
+    if output_file == '':
+        output_file = 'similarity.json'
+    elif input_file == output_file:
+        print('input and output files cannot be the same')
+        sys.exit(1)
+    
+    # construct dataframes from the json file
     df = pd.read_json(input_file)
     df = df[df.index.str.contains("topics")==False]
     df = df[df.index.str.contains("affinities")==False]
     df = df.fillna(0)
+
+    print(df.shape)
+    # make an adjacency matrix from the input file
+    #df = df.T
+    #df = df[df.index.str.contains("topics")==False]
+    #df = df[df.index.str.contains("affinities")==False]
+
+
+    # drop the 'affinities' column
+
+
+    print(df.shape)
 
     # compute the similarity matrix, and save
     # a sorted dictionary to a json file
