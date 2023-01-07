@@ -1,4 +1,4 @@
-### Flavor Metrics/Gastronomical Map Project
+## Flavor Metrics/Gastronomical Map Project
 
 Building a way to visualize The Flavor Bible, and develop flavor metrics to aid in recipe creation, menu development, and crop cycles.  
 
@@ -12,6 +12,12 @@ and concepts converge, can help assist a wide range of users:
 * *chefs* and *homecooks*
 * *brewers* and *vitners*
 
+## Demo
+
+[Prototype on brege.org.](https://brege.org/post/the-flavor-network/)
+
+## Overview
+
 0. [buy the ebook](https://karenandandrew.com/books/the-flavor-bible/) and read it
 
 1. parse the epub files from the book into json format
@@ -23,7 +29,7 @@ an integral distance rank of an ingredient's importance to its
 source, and is directly based on the different impact typefaces 
 used in the book.
 
-We assume these html chapter files live in ./input/.
+We assume these html chapter files live in `./input`.
 
 2. clean up the json, which outputs a better weighted `clean.json`
 ``` bash
