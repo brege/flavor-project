@@ -2,7 +2,7 @@
 
 """
 
-Usage: python ./build_database.py 
+Usage: python ./parse_html.py  
 
 The purpose of this code is to create a database with an assumed seven 
 rankings in "The Flavor Bible" and related literature for the strengths

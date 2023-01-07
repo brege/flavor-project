@@ -78,6 +78,14 @@ def remove_alias(bible):
             #print("Removing alias entry: {}".format(key))   
             del bible[key]
 
+def remove_trailing_spaces(bible):
+    """Remove trailing spaces"""
+    for key in list(bible.keys()):
+        if key != key.strip():
+            bible[key.strip()] = bible[key]
+            #print("Renaming key: {} to {}".format(key, key.strip()))
+            del bible[key]
+
 # [scares me]
 def strip_asterisks(bible):
     """Strip asterisks"""
@@ -117,9 +125,6 @@ def remove_see_also(bible):
 
 # TODO: these last four functions are all the same logic, 
 #       so we should combine them into one function
-
-#def remove_parentheses(bible): return bible
-#def fixKEY(bible): return bible
 
 def convert_to_lower_case(bible):
     """Convert to lower case"""
@@ -163,7 +168,7 @@ def remove_empty_keys(bible, n):
     df = df.sort_values(0, ascending=False)
     df = df.to_dict()
 
-    # loop through all the keys and remove entries
+    # for all keys, remove entries
     # that are not in the dataframe
     for key in list(bible.keys()):
         for entry in list(bible[key].items()):
@@ -193,6 +198,7 @@ def clean_bible(bible):
     strip_asterisks(bible)
     convert_to_lower_case(bible)
     remove_see_also(bible)
+    remove_trailing_spaces(bible)
     # get the total count of appearances for each
     # entry in the bible, and remove entries that
     # only appear less than n times
@@ -240,20 +246,14 @@ def apply_weight(bible):
 
 def main():
     """Main"""
-    # get the input and output files
     input = sys.argv[1]
     output = sys.argv[2]
-    # read the file
     with open(input) as file:
         bible = json.load(file)
-    # clean the bible
     clean_bible(bible)
-    # apply weight
     apply_weight(bible)
-    # write the bible
+    # write the new bible
     write_bible(bible, output)
 
 if __name__ == '__main__':
     main()
-
-# Path: clean_bible.py

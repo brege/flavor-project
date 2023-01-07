@@ -19,8 +19,9 @@ and concepts converge, can help assist a wide range of users:
 python ./parse_html.py
 ```
 which generates `bible.json`.  The numbers in the json represent 
-an integral distance rank of an ingredients importance to its 
-source, and is based on the different typefaces used in the book.
+an integral distance rank of an ingredient's importance to its 
+source, and is directly based on the different impact typefaces 
+used in the book.
 
 We assume these html chapter files live in ./input/.
 
