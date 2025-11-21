@@ -1,13 +1,13 @@
 """Create nodes and edges from cleaned data.
 
 Usage:
-    create_nodes_and_edges.py <input_file> <output_file_edges> <output_file_nodes>
+    graph.py <input_file> <output_file_edges> <output_file_nodes>
 
 Options:
     -h --help     Show this screen.
 
 This script creates a file with the edges and a file with the nodes from the cleaned
-data (output of clean_data.py). The output files are used as input for the
+data (output of clean.py). The output files are used as input for the
 create_graph.py script.
 
 Both the input and output files are assumed to be json files.

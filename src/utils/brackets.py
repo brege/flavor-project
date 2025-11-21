@@ -2,11 +2,11 @@ import re
 
 def parse_brackets(X, bra, ket, sep):
 
-    '''
-    Input: 
+    r'''
+    Input:
         X = 'hello, \[LB.A 1.0, B 1.0RB\], C, D \[LB. E,FRB\]'
     Config:
-        sep = ',' 
+        sep = ','
         bra = '\[LB.'
         ket = 'RB\]'
     Output:
@@ -71,8 +71,8 @@ def parse_brackets(X, bra, ket, sep):
 
 '''
 # Testing examples:
-bra = '\(e.g.,'
-ket = '\)'
+bra = r'\(e.g.,'
+ket = r'\)'
 
 X = ["strong red (e.g., Cabernet Sauvignon, Zinfandel), dry white (e.g., Riesling), sparkling (e.g., Champagne), sweet (e.g., ice wine)",  "fresh, dried, red, green (e.g., jalapeño)", "seafood (e.g., shrimp)"]
 print("input:", X)

@@ -1,15 +1,15 @@
 """
 Usage:
-    compute_similarities.py -i input_json_file -o output_json_file 
+    similarity.py -i input_json_file -o output_json_file
 
 Options:
     -i input_json_file     The input json file, which is the output of
-                            clean_data.py
+                            clean.py
     -o output_json_file    The output json file, which is the output of
                             this script
 
 The input json file should the file that was output by
-the clean_data.py script, whereas the output json file 
+the clean.py script, whereas the output json file 
 from this script will be the similarity matrix, but only 
 for the canonically title ingrdients.
 
