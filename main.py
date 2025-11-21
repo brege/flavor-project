@@ -22,10 +22,10 @@ def main():
     print("=" * 50)
 
     steps = [
-        ("parse.py", [], "Parse HTML chapters"),
-        ("clean.py", ["output/bible.json", "output/clean.json"], "Clean and normalize data"),
-        ("similarity.py", ["-i", "output/clean.json", "-o", "output/similarity.json"], "Compute similarity matrix"),
-        ("graph.py", ["output/clean.json", "output/edges.json", "output/nodes.json"], "Create network graph"),
+        ("src/pipeline/parse.py", [], "Parse HTML chapters"),
+        ("src/pipeline/clean.py", ["output/bible.json", "output/clean.json"], "Clean and normalize data"),
+        ("src/pipeline/similarity.py", ["-i", "output/clean.json", "-o", "output/similarity.json"], "Compute similarity matrix"),
+        ("src/pipeline/graph.py", ["output/clean.json", "output/edges.json", "output/nodes.json"], "Create network graph"),
     ]
 
     for i, (script, args, description) in enumerate(steps, 1):

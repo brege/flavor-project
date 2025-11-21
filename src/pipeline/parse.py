@@ -53,8 +53,8 @@ import re
 import glob
 import os.path
 import json
-import src.parse_brackets as pb
-from src.food_genres import isCulinaryGroup
+import src.utils.brackets as pb
+from src.utils.genres import isCulinaryGroup
 
 ##
 # Matching Flavors Heuristic (cf. pp 37)

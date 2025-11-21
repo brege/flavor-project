@@ -20,10 +20,10 @@ if len(v) < 2:
         v.append(idx)
 
 A = df[a].nlargest(25)
-V = df[v]
+V = df[v].copy().astype(float)
 
 for idx in V.T.index:
-    V[idx] = V[idx].nlargest(15)
+    V.loc[:, idx] = V[idx].nlargest(15)
 A = A.nlargest(20)
 
 GG = []
@@ -90,5 +90,8 @@ nx.draw(GH, pos,
         alpha=0.5,
         with_labels=True)
 
-plt.savefig('../fig/visualize-graph.png')
+import os
+output_dir = '../output/img'
+os.makedirs(output_dir, exist_ok=True)
+plt.savefig(os.path.join(output_dir, 'visualize-graph.png'))
 plt.show()
