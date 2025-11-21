@@ -78,7 +78,7 @@ def what_rank(x):
     return rank
 
 def rank_subtags(Y, ptag):
-    rank = lambda x: 4 - x
+    def rank(x): return 4 - x
     y = [rank(0) for y_i in Y]
     s_tags=ptag.find_all('strong')
     for s_tag in s_tags:
@@ -294,7 +294,7 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
 
                 #if title == 'PEARS': #continue #!Debug
                 #    print(ptag)
-                rank = lambda x: 4 - x 
+                def rank(x): return 4 - x
                 subtitle = ptag.text.split(':')[0]
                 subtext = ptag.text.split(':')[1]
                 s_tags = ptag.find_all('strong')
@@ -334,7 +334,7 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
             # when: a, b [hopefully]
             else:
                 if re.search(',', ptag.text):
-                    rank = lambda x: 4 - x
+                    def rank(x): return 4 - x
                     X = re.sub('esp. ','',ptag.text)
                     X = re.sub('e.g.,','',X)
                     X = re.sub(' or ','', X) 

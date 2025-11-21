@@ -65,7 +65,6 @@ cleaned_data.json (a dict of dicts of key-value pairs):
 import json
 from docopt import docopt
 import pandas as pd
-import numpy as np
 
 def show_stats(nodes, edges):
     print('Number of nodes: {}'.format(len(nodes)))

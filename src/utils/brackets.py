@@ -50,9 +50,9 @@ def parse_brackets(X, bra, ket, sep):
     for i in range(len(P)):
         L = X.split(P[i])[0]
         R = X.split(P[i])[1]
-        l = L.split(sep)
-        for j in range(len(l)):
-            Y.append(l[j].strip())
+        left = L.split(sep)
+        for j in range(len(left)):
+            Y.append(left[j].strip())
         q = Q[i].split(sep)
         for k in range(len(q)):
             Y.append(q[k].strip())
@@ -60,9 +60,9 @@ def parse_brackets(X, bra, ket, sep):
         X = R
 
     # maybe there's entries after the last P-block too
-    l = R.split(sep)
-    for j in range(len(l)): 
-        Y.append(l[j].strip())
+    left = R.split(sep)
+    for j in range(len(left)):
+        Y.append(left[j].strip())
 
     # finally, we can remove any empty entries from the list: 
     Y = [y for y in Y if y != '' and y != ' ']

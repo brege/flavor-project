@@ -1,5 +1,3 @@
-import re
-
 class isCulinaryGroup:
     
     def __init__(self, name, genre, species):

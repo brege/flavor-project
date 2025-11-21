@@ -146,8 +146,8 @@ def main():
     
     # construct dataframes from the json file
     df = pd.read_json(input_file)
-    df = df[df.index.str.contains("topics")==False]
-    df = df[df.index.str.contains("affinities")==False]
+    df = df[~df.index.str.contains("topics")]
+    df = df[~df.index.str.contains("affinities")]
     df = df.fillna(0)
 
     print(df.shape)

@@ -65,9 +65,7 @@ and we want to convert it to this:
 
 """
 
-import os
 import json
-import re
 import sys
 import pandas as pd
 
@@ -222,19 +220,15 @@ class convertRank:
     def to_weight(n):
         """To weight"""
         eps = 1e-6
-        try: m = int(n)
-        except: pass
-        if n < -eps: return 0
-        elif n > eps: return 5-n
-        else: return 0
+        try: int(n)
+        except (ValueError, TypeError): pass
+        return 0 if n < -eps else (5-n if n > eps else 0)
     def to_binary(n):
         """To binary"""
         eps = 1e-6
-        try: m = int(n)
-        except: pass
-        if n < eps: return 0
-        elif n > eps: return 1
-        else: return 0
+        try: int(n)
+        except (ValueError, TypeError): pass
+        return 0 if n < eps else (1 if n > eps else 0)
 
 def apply_weight(bible):
     """Apply weight"""
