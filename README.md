@@ -77,10 +77,15 @@ python src/pipeline/graph.py output/clean.json output/edges.json output/nodes.js
 
 5. slice the graph:
 ``` bash
-python tools/slice.py -i nodes.json -e edges.json -n 'basil' -n 'garlic' -n 'olive oil'
+python tools/slice.py -i output/nodes.json -e output/edges.json -n 'basil' -n 'garlic' -n 'olive oil'
 ```
 
-6. visualize a similarity heatmap from a list of input ingredients
+6. generate a similarity heatmap from a list of input ingredients
 ``` bash
-python tools/heatmap.py -i similarity.json -o samples.txt -d 5 -n 'basil' -n 'garlic' -n 'olive oil'
+python tools/heatmap.py -n 'basil' -n 'garlic' -n 'olive oil'
+```
+
+7. visualize ingredient networks
+``` bash
+python tools/visualize.py -n 'basil' -n 'garlic'
 ```
