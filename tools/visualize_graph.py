@@ -4,8 +4,8 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
-df = pd.read_pickle('./.convert_rank_to_weight_df.pkl')
-bf = pd.read_pickle('./.jac_sim_df.pkl')
+df = pd.read_pickle('../output/.convert_rank_to_weight_df.pkl')
+bf = pd.read_pickle('../output/.jac_sim_df.pkl')
 
 #v = ['BANANAS']
 v = ['BASIL', 'CHEESE, PARMESAN', 'GARLIC', 'OLIVE OIL', 'PINE NUTS']
@@ -90,5 +90,5 @@ nx.draw(GH, pos,
         alpha=0.5,
         with_labels=True)
 
-plt.savefig('./fig/visualize-graph.png')
+plt.savefig('../fig/visualize-graph.png')
 plt.show()
