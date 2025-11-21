@@ -2,7 +2,7 @@
 
 """
 
-Usage: python ./parse_html.py  
+Usage: python ./parse.py  
 
 The purpose of this code is to create a database with an assumed seven 
 rankings in "The Flavor Bible" and related literature for the strengths
@@ -353,7 +353,7 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
                 bible[title][subtitle] = what_rank(ptag)
 
 
-output_file = open("bible.json", "w")
+output_file = open("output/bible.json", "w")
 json.dump(bible, output_file, indent = 2)
 
 # TODO: what to do about reference pointers?
