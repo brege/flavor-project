@@ -39,6 +39,11 @@ def main():
         metavar='FILE',
         help='output PNG file (default: output/img/visualize-graph.png)'
     )
+    parser.add_argument(
+        '--no-show',
+        action='store_true',
+        help='do not display the plot window'
+    )
 
     args = parser.parse_args()
 
@@ -152,9 +157,11 @@ def main():
             with_labels=True)
 
     output_dir = os.path.dirname(args.output)
-    os.makedirs(output_dir, exist_ok=True)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
     plt.savefig(args.output)
-    plt.show()
+    if not args.no_show:
+        plt.show()
 
     return 0
 

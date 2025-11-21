@@ -89,3 +89,17 @@ python tools/heatmap.py -n 'basil' -n 'garlic' -n 'olive oil'
 ``` bash
 python tools/visualize.py -n 'basil' -n 'garlic'
 ```
+
+### Visualize
+
+The preset nodes in `visualize.py` are the five ingredients of pesto.
+``` bash
+python tools/visualize.py -o docs/img/pesto.png --no-show
+```
+
+![pesto](./docs/img/pesto.png)
+
+
+That's just a quick and dirty preview without leaving Python. For an interactive visualization, see the [demo at https://flavorpair.me](https://flavorpair.me)!
+
+![pesto-better](./docs/img/pesto-better.png)
