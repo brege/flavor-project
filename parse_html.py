@@ -301,10 +301,11 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
         
                 # when: a: x (e.g., y), z
                 if "(e.g." in subtext:
-                    Y = pb.parse_brackets(subtext, '\(e.g.', '\)', sep=',')
+                    Y = pb.parse_brackets(subtext, r'\(e.g.', r'\)', sep=',')
                 else:
                     Y = ptag.text.split(':')[1].strip()
                     Y = Y.split(',')
+                
 
                 Y = isCulinaryGroup.orient(ptag.text, subtitle, Y)
                 Y, y = rank_subtags(Y, ptag)
@@ -319,11 +320,11 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
                 if ")" not in X:
                     X+=")"
                 # [/errata]
-                Y = pb.parse_brackets(X, '\(e.g.', '\)', sep=',')
+                Y = pb.parse_brackets(X, r'\(e.g.', r'\)', sep=',')
                 # [errata pp 151]
                 if 'sweet (' in ptag.text:
-                    Y = [re.sub('sweet \(','', y) for y in Y]
-                    Y = [re.sub('\)','', y) for y in Y]
+                    Y = [re.sub(r'sweet \(','', y) for y in Y]
+                    Y = [re.sub(r'\)','', y) for y in Y]
                 # [/errata]
                 Y, y = rank_subtags(Y, ptag)
                 for i in range(len(Y)):
@@ -339,9 +340,9 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
                     X = re.sub(' or ','', X) 
                     Y = X.split(',')
                     s_tags = ptag.find_all('strong')
+
             
                     Y = isCulinaryGroup.orient(X, Y[0], Y[1:])
-                    print(X, Y)
                     Y, y = rank_subtags(Y, ptag)
                     for i in range(len(Y)):
                         subtitle = Y[i].lower().strip('*').strip()
