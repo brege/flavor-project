@@ -21,6 +21,15 @@ and concepts converge, can help assist a wide range of users:
 
 [Purchase the book](https://karenandandrew.com/books/the-flavor-bible/)
 
+### Install
+
+Requires Python 3.10+ and [uv](https://docs.astral.sh/uv/):
+
+``` bash
+uv venv
+source .venv/bin/activate
+uv pip sync requirements.lock
+```
 
 ### Overview
 

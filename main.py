@@ -9,11 +9,14 @@ Usage:
 
 import subprocess
 import sys
+import os
 
 def run_step(script, args):
     """Run a pipeline step."""
     print(f"\nRunning {script}...")
-    result = subprocess.run([sys.executable, script] + args, check=False)
+    env = os.environ.copy()
+    env['PYTHONPATH'] = os.getcwd()
+    result = subprocess.run([sys.executable, script] + args, env=env, check=False)
     return result.returncode == 0
 
 def main():

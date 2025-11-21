@@ -5,6 +5,7 @@ output/
 # Python cache
 __pycache__/
 *.pyc
+.venv/
 
 # Misc
 .cache/
