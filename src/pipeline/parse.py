@@ -136,7 +136,7 @@ topics = ["Season:",
 # in the beginning..
 bible = {}
 
-input_dir = "./input/"
+input_dir = "./input/bible/"
 input_files = "FlavorBible_chap-3*.html"
 
 for input_file in glob.glob(os.path.join(input_dir, input_files)):

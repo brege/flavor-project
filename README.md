@@ -58,7 +58,7 @@ python src/pipeline/parse.py
 ```
 which generates `output/bible.json`. The numbers in the json represent an integral distance rank of an ingredient's importance to its source, and is directly based on the different impact typefaces used in the book.
 
-We assume these html chapter files live in `input/`.
+We assume these html chapter files live in `input/bible/`.
 
 2. clean up the json, which outputs a better weighted `clean.json`
 ``` bash
