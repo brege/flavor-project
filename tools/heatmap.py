@@ -8,20 +8,20 @@ def main():
     parser = argparse.ArgumentParser(
         prog='heatmap.py',
         description='Generate a heatmap of ingredient similarities and suggest complementary ingredients',
-        epilog='Example: python heatmap.py -i output/similarity.json -o heatmap.csv -d 5 -n garlic -n basil -n "olive oil"'
+        epilog='Example: python heatmap.py -i data/similarity.json -o heatmap.csv -d 5 -n garlic -n basil -n "olive oil"'
     )
 
     parser.add_argument(
         '-i', '--input',
-        default='output/similarity.json',
+        default='data/similarity.json',
         metavar='FILE',
-        help='input similarity matrix (default: output/similarity.json)'
+        help='input similarity matrix (default: data/similarity.json)'
     )
     parser.add_argument(
         '-o', '--output',
-        default='output/heatmap.csv',
+        default='data/heatmap.csv',
         metavar='FILE',
-        help='output heatmap CSV (default: output/heatmap.csv)'
+        help='output heatmap CSV (default: data/heatmap.csv)'
     )
     parser.add_argument(
         '-d', '--depth',

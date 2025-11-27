@@ -26,9 +26,9 @@ def main():
 
     steps = [
         ("src/pipeline/parse.py", [], "Parse HTML chapters"),
-        ("src/pipeline/clean.py", ["output/bible.json", "output/clean.json"], "Clean and normalize data"),
-        ("src/pipeline/similarity.py", ["-i", "output/clean.json", "-o", "output/similarity.json"], "Compute similarity matrix"),
-        ("src/pipeline/graph.py", ["output/clean.json", "output/edges.json", "output/nodes.json"], "Create network graph"),
+        ("src/pipeline/clean.py", ["data/bible.json", "data/clean.json"], "Clean and normalize data"),
+        ("src/pipeline/similarity.py", ["-i", "data/clean.json", "-o", "data/similarity.json"], "Compute similarity matrix"),
+        ("src/pipeline/graph.py", ["data/clean.json", "data/edges.json", "data/nodes.json"], "Create network graph"),
     ]
 
     for i, (script, args, description) in enumerate(steps, 1):
@@ -40,7 +40,7 @@ def main():
     print("\n" + "=" * 50)
     print("PIPELINE COMPLETE")
     print("=" * 50)
-    print("\nOutput files in ./output/:")
+    print("\nOutput files in ./data/:")
     print("  • bible.json (raw parsed data)")
     print("  • clean.json (cleaned/normalized)")
     print("  • similarity.json (Jaccard similarities)")

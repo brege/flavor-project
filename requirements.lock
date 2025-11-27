@@ -2,20 +2,36 @@
 #    uv pip compile requirements.txt -o requirements.lock
 beautifulsoup4==4.14.2
     # via -r requirements.txt
+certifi==2025.11.12
+    # via requests
+charset-normalizer==3.4.4
+    # via requests
 contourpy==1.3.3
-    # via matplotlib
+    # via
+    #   -r requirements.txt
+    #   matplotlib
 cycler==0.12.1
-    # via matplotlib
+    # via
+    #   -r requirements.txt
+    #   matplotlib
 docopt==0.6.2
     # via -r requirements.txt
 fonttools==4.60.1
-    # via matplotlib
+    # via
+    #   -r requirements.txt
+    #   matplotlib
 fuzzywuzzy==0.18.0
     # via -r requirements.txt
+idna==3.11
+    # via requests
 joblib==1.5.2
-    # via scikit-learn
+    # via
+    #   -r requirements.txt
+    #   scikit-learn
 kiwisolver==1.4.9
-    # via matplotlib
+    # via
+    #   -r requirements.txt
+    #   matplotlib
 matplotlib==3.10.6
     # via -r requirements.txt
 networkx==3.3
@@ -29,22 +45,35 @@ numpy==2.3.4
     #   scikit-learn
     #   scipy
 packaging==25.0
-    # via matplotlib
+    # via
+    #   -r requirements.txt
+    #   matplotlib
 pandas==2.3.3
     # via -r requirements.txt
 pillow==12.0.0
-    # via matplotlib
+    # via
+    #   -r requirements.txt
+    #   matplotlib
 pyparsing==3.2.5
-    # via matplotlib
+    # via
+    #   -r requirements.txt
+    #   matplotlib
 python-dateutil==2.9.0.post0
     # via
+    #   -r requirements.txt
     #   matplotlib
     #   pandas
 pytz==2025.2
-    # via pandas
+    # via
+    #   -r requirements.txt
+    #   pandas
 pyyaml==6.0.2
     # via -r requirements.txt
 rapidfuzz==3.12.2
+    # via -r requirements.txt
+requests==2.32.3
+    # via -r requirements.txt
+ruff==0.14.5
     # via -r requirements.txt
 scikit-learn==1.7.2
     # via -r requirements.txt
@@ -53,12 +82,24 @@ scipy==1.16.2
     #   -r requirements.txt
     #   scikit-learn
 six==1.17.0
-    # via python-dateutil
+    # via
+    #   -r requirements.txt
+    #   python-dateutil
 soupsieve==2.8
-    # via beautifulsoup4
+    # via
+    #   -r requirements.txt
+    #   beautifulsoup4
 threadpoolctl==3.6.0
-    # via scikit-learn
+    # via
+    #   -r requirements.txt
+    #   scikit-learn
 typing-extensions==4.15.0
-    # via beautifulsoup4
+    # via
+    #   -r requirements.txt
+    #   beautifulsoup4
 tzdata==2025.2
-    # via pandas
+    # via
+    #   -r requirements.txt
+    #   pandas
+urllib3==2.5.0
+    # via requests

@@ -38,7 +38,7 @@ Run the complete pipeline:
 python main.py
 ```
 
-Outputs all data to `output/`:
+Outputs all data to `data/`:
 
 - `bible.json` - Raw parsed ingredient relationships
 - `clean.json` - Normalized and cleaned data
@@ -56,28 +56,28 @@ The data processing pipeline requires a few intermediate steps to turn the book 
 ``` bash
 python src/pipeline/parse.py
 ```
-which generates `output/bible.json`. The numbers in the json represent an integral distance rank of an ingredient's importance to its source, and is directly based on the different impact typefaces used in the book.
+which generates `data/bible.json`. The numbers in the json represent an integral distance rank of an ingredient's importance to its source, and is directly based on the different impact typefaces used in the book.
 
 We assume these html chapter files live in `input/bible/`.
 
 2. clean up the json, which outputs a better weighted `clean.json`
 ``` bash
-python src/pipeline/clean.py output/bible.json output/clean.json
+python src/pipeline/clean.py data/bible.json data/clean.json
 ```
 
 3. compute the similarity matrix in the jaccard metric, which makes a larger `similarity.json`
 ``` bash
-python src/pipeline/similarity.py -i output/clean.json -o output/similarity.json
+python src/pipeline/similarity.py -i data/clean.json -o data/similarity.json
 ```
 
 4. create the network graph data:
 ``` bash
-python src/pipeline/graph.py output/clean.json output/edges.json output/nodes.json
+python src/pipeline/graph.py data/clean.json data/edges.json data/nodes.json
 ```
 
 5. slice the graph:
 ``` bash
-python tools/slice.py -i output/nodes.json -e output/edges.json -n 'basil' -n 'garlic' -n 'olive oil'
+python tools/slice.py -i data/nodes.json -e data/edges.json -n 'basil' -n 'garlic' -n 'olive oil'
 ```
 
 6. generate a similarity heatmap from a list of input ingredients

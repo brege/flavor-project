@@ -1,12 +1,10 @@
-# Generated data files
-input/
-output/
+# generated data files
+data/
 
-# Python cache
+# python cache
 __pycache__/
 *.pyc
 .venv/
 
-# Misc
-.cache/
+# misc
 *.pkl

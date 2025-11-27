@@ -136,7 +136,7 @@ topics = ["Season:",
 # in the beginning..
 bible = {}
 
-input_dir = "./input/bible/"
+input_dir = "./data/bible/"
 input_files = "FlavorBible_chap-3*.html"
 
 for input_file in glob.glob(os.path.join(input_dir, input_files)):
@@ -353,7 +353,7 @@ for input_file in glob.glob(os.path.join(input_dir, input_files)):
                 bible[title][subtitle] = what_rank(ptag)
 
 
-output_file = open("output/bible.json", "w")
+output_file = open("data/bible.json", "w")
 json.dump(bible, output_file, indent = 2)
 
 # TODO: what to do about reference pointers?

@@ -16,15 +16,15 @@ def main():
 
     parser.add_argument(
         '-c', '--clean',
-        default='output/clean.json',
+        default='data/clean.json',
         metavar='FILE',
-        help='input clean data JSON (default: output/clean.json)'
+        help='input clean data JSON (default: data/clean.json)'
     )
     parser.add_argument(
         '-s', '--similarity',
-        default='output/similarity.json',
+        default='data/similarity.json',
         metavar='FILE',
-        help='input similarity matrix JSON (default: output/similarity.json)'
+        help='input similarity matrix JSON (default: data/similarity.json)'
     )
     parser.add_argument(
         '-n', '--node',
@@ -35,9 +35,9 @@ def main():
     )
     parser.add_argument(
         '-o', '--output',
-        default='output/img/visualize-graph.png',
+        default='data/img/visualize-graph.png',
         metavar='FILE',
-        help='output PNG file (default: output/img/visualize-graph.png)'
+        help='output PNG file (default: data/img/visualize-graph.png)'
     )
     parser.add_argument(
         '--no-show',
