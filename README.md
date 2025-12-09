@@ -23,12 +23,11 @@ and concepts converge, can help assist a wide range of users:
 
 ### Install
 
-Requires Python 3.10+ and [uv](https://docs.astral.sh/uv/):
+Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/):
 
 ``` bash
-uv venv
+uv sync
 source .venv/bin/activate
-uv pip sync requirements.lock
 ```
 
 ### Overview
